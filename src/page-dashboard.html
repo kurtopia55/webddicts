@@ -68,14 +68,14 @@
 
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
-      <app-drawer>
+      <app-drawer id = "drawer">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="/view1">Home</a>
-          <a name="view2" href="/view2">Profile</a>
-          <a name="view2" href="/view4">Newsfeed</a>
-          <a name="view3" href="/view3">Notifications</a>
-          <a name="view3" href="javascript:void(0)" on-tap= "logout">Logout</a>
+          <a name="view1" href="/view1" drawer-toggle>Home</a>
+          <a name="view2" href="/view2" drawer-toggle>Profile</a>
+          <a name="view2" href="/view4" drawer-toggle>Newsfeed</a>
+          <a name="view3" href="/view3" drawer-toggle>Notifications</a>
+          <a name="view3" href="javascript:void(0)" on-tap= "logout" drawer-toggle>Logout</a>
         </iron-selector>
       </app-drawer>
 
