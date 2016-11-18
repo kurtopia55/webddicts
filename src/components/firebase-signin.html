@@ -17,10 +17,14 @@
                 display: block;
             }
 
-            .acctCircle{
+            paper-button.fancy {
+              background:#E3F2FD;
+              color:#455A64;
+            }
 
-                --iron-icon-height: 32px;
-                --iron-icon-width: 32px;
+            paper-button.fancy:hover {
+              background: #FAFAFA;
+            
             }
 
              iron-selector > section {
@@ -75,7 +79,7 @@
                     <div id = "page-splash">  
                     
                         <h1><iron-image src= "http://localhost:8080/images/icon2.png" style="width:70px;height:70px; margin-bottom:-12px; margin-right:-15px;" sizing="contain"></iron-image> N E E D Y</h1>
-                        <paper-button raised on-tap = "_signIn"><iron-icon src= "http://localhost:8080/images/account-circle.png" ></iron-icon> &nbsp;&nbsp;Sign-in with google</paper-button>
+                        <paper-button raised on-tap = "_signIn" class="fancy"><iron-icon src= "http://localhost:8080/images/account-circle.png" ></iron-icon> &nbsp;&nbsp;Sign-in with google</paper-button>
                     </div>
                 </section>
 
