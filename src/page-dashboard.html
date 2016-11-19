@@ -117,7 +117,7 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <needy-home name="home" on-view-location="_viewLocation"></needy-home>
+          <needy-home name="home" id="home" on-view-location="_viewLocation"></needy-home>
           <needy-profile name="profile"></needy-profile>
           <needy-my-posting name="my-posting"></needy-my-posting>
           <needy-view-location id = "viewLocation" name="view-location"></needy-view-location>
@@ -146,7 +146,8 @@
                         type: 'user',
                         key: 'authenticated'
                     }).value;
-                }
+                }, 
+                observer: "userChanged"
             }, 
 
             hideMenu: {
@@ -158,6 +159,10 @@
       observers: [
         '_routePageChanged(routeData.page)'
       ],
+
+      userChanged: function(){
+        this.$.home.uid = this.user.uid;
+      },
 
       _routePageChanged: function(page) {
         this.page = page || 'home';

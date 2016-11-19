@@ -10,6 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="newsfeed/newsfeed-item.html">
+<link rel="import" href="../bower_components/polymerfire/firebase.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="needy-home">
@@ -23,6 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 background: #FAFAFA;
             }
         </style>
+        <firebase-document orderByPriority log location="storelocator-a3548.firebaseio.com/posts" data="{{data}}"></firebase-document>
         <template is="dom-repeat" items="{{feeds}}" as="feed">
             <newsfeed-item feed="{{feed}}"></newsfeed-item>
         </template>
@@ -34,8 +38,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             properties: {
                 feeds: {
                     type: Array
+                }, 
+
+                uid: {
+                    type: String
+                }, 
+
+                data: {
+                    type:Array,
+                    observer: "dataChanged"
                 }
             }, 
+
+            dataChanged: function(newData, oldData){
+                console.log(this.uid, newData, oldData);
+            },
 
             ready: function(){
                 this.feeds = [
