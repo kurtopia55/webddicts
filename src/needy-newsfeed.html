@@ -23,6 +23,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 background: #FAFAFA;
             }
         </style>
+           <firebase-document log orderByPriority id="notification" location="https://needy-21a00.firebaseio.com/notification" data="{{feeds}}"></firebase-document>
+
         <template is="dom-repeat" items="{{feeds}}" as="feed">
             <newsfeed-item feed="{{feed}}"></newsfeed-item>
         </template>
@@ -36,15 +38,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     type: Array
                 }
             }, 
+            user: {
+                type: Object,
+                value: function() {
+                    return new Polymer.IronMeta({
+                        type: 'user',
+                        key: 'authenticated'
+                    }).value;
+                }, 
+                observer: "userChanged"
 
+            }, 
             ready: function(){
-                this.feeds = [
-                        {title: 'Posting 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 1'}, 
-                        {title: 'Posting 2', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 2'}, 
-                        {title: 'Posting 3', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 3'}, 
-                        {title: 'Posting 4', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 4'}, 
-                        {title: 'Posting 5', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 5'}
-                    ]
             }
         });
     </script>

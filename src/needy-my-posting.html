@@ -8,7 +8,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/polymer-micro.html">
 <link rel="import" href="../bower_components/firebase-element/firebase.html">
 <link rel="import" href="../bower_components/firebase-element/firebase-collection.html">
@@ -16,7 +15,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="newsfeed/my-posting-item.html">
 <link rel="import" href="shared-styles.html">
-
 
 <dom-module id="needy-my-posting">
     <template>
@@ -29,7 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 background: #FAFAFA;
             }
         </style>
-         <firebase-document orderByPriority id="post" location="https://needy-21a00.firebaseio.com/posting" data="{{feeds}}"></firebase-document>
+         <firebase-document orderByPriority id="posting" location="https://needy-21a00.firebaseio.com/posting" data="{{feeds}}"></firebase-document>
+
         <template is="dom-repeat" items="{{feeds}}" as="feed">
             <my-posting-item feed="{{feed}}"></my-posting-item>
         </template>
@@ -43,17 +42,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     type: Array
                 }
             }, 
-             post:{
+            post:{
                 type: String
             },
+
             ready: function(){
-                // this.feeds = [
-                //         {title: 'Posting 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 1'}, 
-                //         {title: 'Posting 2', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 2'}, 
-                //         {title: 'Posting 3', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 3'}, 
-                //         {title: 'Posting 4', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 4'}, 
-                //         {title: 'Posting 5', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 5'}
-                //     ]
             }
         });
     </script>

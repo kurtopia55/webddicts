@@ -8,8 +8,13 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+<link rel="import" href="../bower_components/polymer/polymer-micro.html">
+<link rel="import" href="../bower_components/firebase-element/firebase.html">
+<link rel="import" href="../bower_components/firebase-element/firebase-collection.html">
+<link rel="import" href="../bower_components/firebase-element/firebase-document.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="newsfeed/newsfeed-item.html">
+<link rel="import" href="newsfeed/homefeed-item.html">
+
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="needy-home">
@@ -23,8 +28,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 background: #FAFAFA;
             }
         </style>
+        <firebase-document orderByPriority id="post" location="https://needy-21a00.firebaseio.com/post" data="{{feeds}}"></firebase-document>
+
         <template is="dom-repeat" items="{{feeds}}" as="feed">
-            <newsfeed-item feed="{{feed}}"></newsfeed-item>
+            <homefeed-item feed="{{feed}}"></homefeed-item>
         </template>
     </template>
     <script>
@@ -34,17 +41,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             properties: {
                 feeds: {
                     type: Array
+                }, 
+
+                uid: {
+                    type: String
+                }, 
+
+                data: {
+                    type:Array,
+                    observer: "dataChanged"
                 }
             }, 
 
+            dataChanged: function(newData, oldData){
+                console.log(this.uid, newData, oldData);
+            },
             ready: function(){
-                this.feeds = [
-                        {title: 'Posting 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 1', lat:'10.317350', lng: '123.905998'}, 
-                        {title: 'Posting 2', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 2', lat:'10.328350', lng: '123.905858'}, 
-                        {title: 'Posting 3', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 3', lat:'10.294754', lng: '123.867640'}, 
-                        {title: 'Posting 4', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 4', lat:'10.301553', lng: '123.870527'}, 
-                        {title: 'Posting 5', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 5', lat:'10.328350', lng: '123.905858'}
-                    ]
             }
         });
     </script>

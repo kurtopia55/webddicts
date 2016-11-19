@@ -12,6 +12,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/google-map/google-map.html">
+<link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 
 <dom-module id="newsfeed-item">
     <template>
@@ -29,6 +32,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             paper-item{
                 padding:15px 25px;
                 border-bottom:1px solid #eee;
+                cursor:pointer;
+            }
+
+            paper-item-body{
+                width:100%;
             }
 
             .flex{
@@ -61,23 +69,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .flex .post div{
                 font-size:13px;
             }
+
+            paper-dialog-scrollable{
+                margin:0 !important;
+                padding:0 !important;
+            }
+
+            paper-dialog-scrollable >  *{
+                padding:0;
+                margin:0;
+            }
+
+            .info{
+                margin-top:15px;
+            }
+
+            .info a{
+                color:#607D8B;
+                text-decoration: none;
+                font-size:12px;
+                margin-right:10px;
+            }
         </style>
         
-        <paper-item noink>
+        <paper-item on-tap="_viewDetails">
             <paper-item-body two-line>
                 <div class="flex">
                     <div class = "image"><iron-image sizing="cover" src="[[feed.image]]"></iron-image></div>
                     <div class = "post">
                         <h2>[[feed.title]]</h2>
                         <div>[[feed.content]]</div>
+                        <div class = "info">
+                            <a href=""><span>[[feed.comment_count]]</span> comment(s)</a>
+                            <a href="">Recommend to a friend</a>
+                        </div>
                     </div>
                     <div class = "links">
-                        <iron-icon icon="communication:call"></iron-icon>
+                        <!-- <iron-icon icon="communication:call"></iron-icon> -->
                         <iron-icon icon="communication:location-on" on-tap="_viewLocation"></iron-icon>
                     </div>
                 </div>
             </paper-item-body>
         </paper-item>
+        <paper-dialog id = "locationDialog" noOverlap=true>
+            <h2 style = "background:#3F51B5;color:#fff;margin: 0;padding: 20px 20px;">Location</h2>
+            <paper-dialog-scrollable>
+                <google-map zoom="18"  latitude="{{_parseNum(feed.lat)}}" longitude="{{_parseNum(feed.long)}}"  api-key="AIzaSyBEciDOD1dKEuR7gGaEAwvqZz5mpzy-TfM" style = "width:100%;min-width:300px;height:300px;">
+                    <google-map-marker latitude="{{feed.lat}}" longitude="{{feed.lng}}"></google-map-marker>
+                </google-map>
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+            </div>
+        </paper-dialog>
     </template>
     <script>
         Polymer({
@@ -86,9 +130,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             properties:{
                 feed: { type: Object }
             }, 
+            _parseNum: function(num){
+                return parseFloat(num);
+            },
 
             _viewLocation: function(e){
-                this.fire('view-location', {lat: this.feed.lat, lng: this.feed.lng});
+                this.$.locationDialog.open();
+            }, 
+
+            _viewDetails: function(e){
+                this.fire('open-item', {post: this.feed})      
             }
         });
     </script>
