@@ -9,6 +9,7 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-badge/paper-badge.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
@@ -50,12 +51,28 @@
         color: var(--app-secondary-color);
 
         line-height: 40px;
+        position:relative;
+      }
+
+      .badge{
+            background: #FF5722;
+            padding: 2px 6px;
+            display: inline;
+            width: auto;
+            margin-left: 10px;
+            color: #fff;
+            min-width: 20px;
+            border-radius:50%;
       }
 
       .drawer-list a.iron-selected {
         color: black;
 
         font-weight: bold;
+      }
+
+      .hidden{
+        display:none;
       }
     </style>
 
@@ -69,13 +86,18 @@
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id = "drawer">
-        <app-toolbar>Menu</app-toolbar>
+        <app-toolbar style = "height:130px;flex-direction:column;">
+            <div style = "margin:10px auto 5px;">  
+                <iron-image sizing="cover" src$="{{user.photoURL}}" style = "width:70px;height:70px;border-radius:50px;"/>
+            </div>
+            <div style = "font-size:14px;">{{user.displayName}}</div>
+        </app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="/view1" drawer-toggle>Home</a>
-          <a name="view2" href="/view2" drawer-toggle>Profile</a>
-          <a name="view2" href="/view4" drawer-toggle>Newsfeed</a>
-          <a name="view3" href="/view3" drawer-toggle>Notifications</a>
-          <a name="view3" href="javascript:void(0)" on-tap= "logout" drawer-toggle>Logout</a>
+          <a name="home"  id = "home" href="/home" drawer-toggle>Home</a>
+          <a name="my-posting" href="/my-posting" drawer-toggle>My Postings</a>
+          <a name="notifications" href="/notifications" drawer-toggle>Notifications <div class = "badge">5</div></a>
+          <a name="view-location" id = "location" href="/view-location" style = "display:none;"></a>
+          <a href="javascript:void(0)" on-tap= "logout" drawer-toggle>Logout</a>
         </iron-selector>
       </app-drawer>
 
@@ -84,7 +106,8 @@
 
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <paper-icon-button icon="menu" id = "menu" drawer-toggle></paper-icon-button>
+            <paper-icon-button icon="arrow-back"  on-tap="_backTapped" class="hidden" id = "back"></paper-icon-button>
             <div main-title>N E E D Y</div>
           </app-toolbar>
         </app-header>
@@ -94,10 +117,12 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
+          <needy-home name="home" on-view-location="_viewLocation"></needy-home>
+          <needy-profile name="profile"></needy-profile>
+          <needy-my-posting name="my-posting"></needy-my-posting>
+          <needy-view-location id = "viewLocation" name="view-location"></needy-view-location>
+          <my-my-view3 name="notifications"></my-my-view3>
+          <needy-view404 name="view404"></needy-view404>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
@@ -112,7 +137,22 @@
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged'
-        }
+        }, 
+
+            user: {
+                type: Object,
+                value: function() {
+                    return new Polymer.IronMetaQuery({
+                        type: 'user',
+                        key: 'authenticated'
+                    }).value;
+                }
+            }, 
+
+            hideMenu: {
+              type: Boolean,
+              value: true
+            }
       },
 
       observers: [
@@ -120,12 +160,25 @@
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'view1';
+        this.page = page || 'home';
+      },
+
+      _viewLocation: function(e){
+        this.$.back.classList.remove('hidden');
+        this.$.menu.classList.add('hidden');
+        this.$.viewLocation.location = e.detail;
+        this.$.location.click();
+      },
+
+      _backTapped: function(){
+        this.$.back.classList.add('hidden');
+        this.$.menu.classList.remove('hidden');
+        this.$.home.click();
       },
 
       _pageChanged: function(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        var resolvedPageUrl = this.resolveUrl('needy-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
 

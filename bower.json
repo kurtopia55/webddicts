@@ -21,7 +21,10 @@
     "iron-icons": "PolymerElements/iron-icons#^1.2.0",
     "paper-spinner": "PolymerElements/paper-spinner#^1.2.1",
     "iron-lazy-pages": "TimvdLippe/iron-lazy-pages#^1.4.3",
-    "iron-image": "PolymerElements/iron-image#^1.2.5"
+    "iron-image": "PolymerElements/iron-image#^1.2.5",
+    "paper-item": "PolymerElements/paper-item#^1.2.1",
+    "paper-badge": "PolymerElements/paper-badge#^1.1.4",
+    "google-map": "GoogleWebComponents/google-map#^1.1.14"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

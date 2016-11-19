@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>My App</title>
+    <title>N E E D Y</title>
     <meta name="description" content="My App description">
 
     <link rel="icon" href="/images/favicon.ico">
@@ -106,6 +106,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             font-family: Roboto, 'Noto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size:13px;
             margin: 0;
+        }
+
+        html /deep/ {
+          ::-webkit-scrollbar-track {
+            background:white;
+          }
+
+          ::-webkit-scrollbar {
+            width: 7.5px;
+          }
+
+          ::-webkit-scrollbar-thumb {
+            background-color: lightgrey; //fallback
+            background-color: rgba(26, 26, 26, 0.25);
+          }
         }
     </style>
   </head>

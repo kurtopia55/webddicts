@@ -132,8 +132,14 @@
 
             _checkUser: function(){
                 var self = this;
-
+                window.auth = this.$.auth;
                 if(this.$.auth.user){
+                    new Polymer.IronMeta({
+                            type     : 'user',
+                            key      : 'authenticated',
+                            value   : this.$.auth.user
+                        });
+
                     this.fire('signed-in', {me: this, "isSignedIn" : true});
                 }else{
                     window.setTimeout(function(){

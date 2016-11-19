@@ -59,6 +59,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 signin:{
                     type: Object
+                }, 
+
+                location: {
+                    type: Object
                 }
             },
 
@@ -67,7 +71,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
 
             _navigatePage: function(response){
-                this.signin = response.detail.me;
+                 if(response.detail.hasOwnProperty("me"))   
+                    this.signin = response.detail.me;
 
                 if(response.detail.isSignedIn){    
                     this.$.pages.selected = "dashboard";
