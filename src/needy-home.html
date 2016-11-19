@@ -13,6 +13,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/firebase-element/firebase-collection.html">
 <link rel="import" href="../bower_components/firebase-element/firebase-document.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="newsfeed/homefeed-item.html">
 
 <link rel="import" href="shared-styles.html">
@@ -27,12 +30,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             newsfeed-item:nth-child(even){
                 background: #FAFAFA;
             }
+
+            .flex{
+                padding:0 20px;
+            }
         </style>
         <firebase-document orderByPriority id="post" location="https://needy-21a00.firebaseio.com/post" data="{{feeds}}"></firebase-document>
 
         <template is="dom-repeat" items="{{feeds}}" as="feed">
             <homefeed-item feed="{{feed}}"></homefeed-item>
         </template>
+        <div style = "position:absolute;right:20px;bottom:20px">
+            <paper-fab icon="add" on-tap = "_showForm"></paper-fab>
+        </div>
+        <paper-dialog id = "formDialog" noOverlap=true>
+            <h2 style = "background:#3F51B5;color:#fff;margin: 0;padding: 20px 20px;">Add Posting</h2>
+            <paper-dialog-scrollable style ="padding:10px 15px;">
+                <div class = "flex">
+                    <paper-input label = "Title"></paper-input>
+                </div>
+                <div class = "flex">
+                    <paper-input label = "Description"></paper-input>
+                </div>
+                
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button>Submit</paper-button>
+                <paper-button dialog-dismiss>Cancel</paper-button>
+            </div>
+        </paper-dialog>
     </template>
     <script>
         Polymer({
@@ -57,6 +83,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 console.log(this.uid, newData, oldData);
             },
             ready: function(){
+            },
+
+            _showForm: function(){
+                this.$.formDialog.open();
             }
         });
     </script>

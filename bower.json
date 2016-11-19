@@ -26,7 +26,8 @@
     "paper-badge": "PolymerElements/paper-badge#^1.1.4",
     "google-map": "GoogleWebComponents/google-map#^1.1.14",
     "paper-fab": "PolymerElements/paper-fab#^1.2.1",
-    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0"
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "paper-input": "PolymerElements/paper-input#^1.1.22"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
