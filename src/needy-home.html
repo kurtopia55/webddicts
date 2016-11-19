@@ -1,0 +1,51 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="newsfeed/newsfeed-item.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="needy-home">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+
+            newsfeed-item:nth-child(even){
+                background: #FAFAFA;
+            }
+        </style>
+        <template is="dom-repeat" items="{{feeds}}" as="feed">
+            <newsfeed-item feed="{{feed}}"></newsfeed-item>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'needy-home', 
+
+            properties: {
+                feeds: {
+                    type: Array
+                }
+            }, 
+
+            ready: function(){
+                this.feeds = [
+                        {title: 'Posting 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 1', lat:'10.317350', lng: '123.905998'}, 
+                        {title: 'Posting 2', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 2', lat:'10.328350', lng: '123.905858'}, 
+                        {title: 'Posting 3', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 3', lat:'10.294754', lng: '123.867640'}, 
+                        {title: 'Posting 4', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 4', lat:'10.301553', lng: '123.870527'}, 
+                        {title: 'Posting 5', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo quis diam sit amet fermentum. Proin eu felis ac tellus gravida placerat. Duis gravida a libero a volutpat.', image: 'test 5', lat:'10.328350', lng: '123.905858'}
+                    ]
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,94 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<dom-module id="my-posting-item">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+
+            iron-image{
+                width:60px;
+                height:60px;
+                border-radius:50px;
+            }
+
+            paper-item{
+                padding:15px 25px;
+                border-bottom:1px solid #eee;
+            }
+
+            .flex{
+                display:flex;
+                position:relative;
+            }
+
+            .flex .links{
+                position:absolute;
+                top:0;
+                right:20px;
+                cursor:pointer;
+            }
+
+            .flex .links iron-icon{
+                margin-left:10px;
+            }
+
+            .flex .image{
+                flex-basis:40px;
+                margin-right:15px;
+            }
+
+            .flex .post h2{
+                font-size:18px;
+                font-weight:normal;
+                margin:4px 0 10px 0;
+            }
+
+            .flex .post div{
+                font-size:13px;
+            }
+        </style>
+        
+        <paper-item noink>
+            <paper-item-body two-line>
+                <div class="flex">
+                    <div class = "image"><iron-image sizing="cover" src="[[feed.image]]"></iron-image></div>
+                    <div class = "post">
+                        <h2>[[feed.title]]</h2>
+                        <div>[[feed.content]]</div>
+                    </div>
+                    <div class = "links">
+                        <iron-icon icon="communication:call"></iron-icon>
+                    </div>
+                </div>
+            </paper-item-body>
+        </paper-item>
+    </template>
+    <script>
+        Polymer({
+            is: 'my-posting-item', 
+
+            properties:{
+                feed: { type: Object }
+            }, 
+
+            _viewLocation: function(e){
+                this.fire('view-location', {lat: this.feed.lat, lng: this.feed.lng});
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,47 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/firebase-element/firebase-collection.html">
+<link rel="import" href="../bower_components/firebase-element/firebase-document.html">
+
+<dom-module id="my-view2">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+           <div class="horizontal center-justified layout">
+            <div class="vertical-section">
+              <h3>Dinosaurs by Height</h3>
+              <template is="dom-bind">
+                <firebase-collection
+                  order-by-child="height"
+                  location="https://needy-21a00.firebaseio.com/needy-21a00"
+                  data="{{needy-21a00}}"></firebase-collection>
+                <template is="dom-repeat" items="[[needy-21a00]]" as="user">
+                  <h4>[[user.__firebaseKey__]]</h4>
+                  <span>Height: </span><span>[[user.height]]</span><span>m</span>
+                </template>
+              </template>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-view2'
+    });
+  </script>
+</dom-module>

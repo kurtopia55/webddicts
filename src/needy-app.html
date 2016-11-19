@@ -1,0 +1,93 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-lazy-pages/iron-lazy-pages.html">
+<link rel="import" href="components/firebase-signin.html">
+<link rel="import" href="page-dashboard.html">
+<link rel="import" href="my-icons.html">
+
+<dom-module id="needy-app">
+    <template>
+        <style>
+            :host {
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
+
+                display: block;
+            }
+        </style>
+
+        <firebase-app auth-domain="needy-21a00.firebaseapp.com" database-url="https://needy-21a00.firebaseio.com/" api-key="AIzaSyANxOwAJGQFH6yRHqk0Fg9kUvk_37B7jqg" storage-bucket="needy-21a00.appspot.com" messaging-sender-dd = "259426276237"></firebase-app>
+
+        <iron-lazy-pages id="pages" selected="login" attr-for-selected="data-route" fallback-selection="login" restamp load-async hide-immediately>
+
+            <template is="iron-lazy-page" data-route="login" path="src/components/firebase-signin.html">
+                <firebase-signin id = "signin" on-signed-in="_navigatePage"></firebase-signin>
+            </template>
+
+            <template is="iron-lazy-page" data-route="dashboard" path="src/page-dashboard.html">
+                <page-dashboard></page-dashboard>
+            </template>
+        </iron-lazy-pages>
+  </template>
+
+    <script>
+        Polymer({
+            is: 'needy-app',
+
+            properties: {
+                verifying: Boolean,
+
+                signin:{
+                    type: Object
+                }, 
+
+                location: {
+                    type: Object
+                }
+            },
+
+            listeners: {
+                'logout': '_handleLogout'
+            },
+
+            _navigatePage: function(response){
+                 if(response.detail.hasOwnProperty("me"))   
+                    this.signin = response.detail.me;
+
+                if(response.detail.isSignedIn){    
+                    this.$.pages.selected = "dashboard";
+                }else{
+                    this.$.pages.selected = "login";
+                }
+            },
+
+            _handleLogout: function(){
+                this.signin._signOut();
+            },
+
+            ready: function(){
+                window.pages = this;                
+            }
+        });
+    </script>
+</dom-module>
